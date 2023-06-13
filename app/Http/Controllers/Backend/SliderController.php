@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -45,9 +46,51 @@ class SliderController extends Controller
                 'background' => $background,
             ]);
 
+            flash()->addSuccess('Slider created successfully');
+
             return redirect()->back()->with('success', 'Slider updated successfully');
         }
         return view('backend.slider.create');
+    }
+
+
+    public function edit(Request $request, $id){
+        $slider = Slider::findOrFail($id);
+
+        if($request->isMethod('PUT')){
+            $request->validate([
+                'title'      => 'required|string|max:255',
+                'sub_title'  => 'nullable|string|max:255',
+                'btn_text'   => 'nullable|string|max:255',
+                'btn_link'   => 'nullable|string|max:255',
+                'alignment'  => 'required|in:left,right,center',
+            ]);
+
+            $background = $slider->background;
+
+            if(!empty($request->file('background'))){
+                Storage::delete('/' . $background);
+                $background = $request->file('background')->getClientOriginalName();
+                $background = str_replace(' ','--', $background);
+                $background = time() . '-' . $background;
+                // store the background
+                $request->file('background')->storeAs('/', $background);
+            }
+
+            // Slider Update
+            $slider->update([
+                'title'      => $request->title,
+                'sub_title'  => $request->sub_title,
+                'btn_text'   => $request->btn_text,
+                'btn_link'   => $request->btn_link,
+                'alignment'  => $request->alignment,
+                'background' => $background,
+            ]);
+            flash()->addSuccess('Slider updated successfully');
+            return redirect()->back()->with('success', 'Slider updated successfully');
+        }
+
+        return view('backend.slider.edit', compact('slider'));
     }
 
 

@@ -37,7 +37,7 @@
                     <td class="text-capitalize">{{ $slider->alignment }}</td>
                     <td>
                         <div class="hstack gap-3 flex-wrap">
-                            <a href="" class="link-success fs-15"><i
+                            <a href="{{ route('slider.edit', $slider->id)}}" class="link-success fs-15"><i
                                     class="ri-edit-2-line"></i></a>
 
                             <a href="javascript::void(0)" onclick="deleteRecord()"

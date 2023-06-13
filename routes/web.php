@@ -30,7 +30,9 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function(){
     //Slider
     Route::get('/slider', [SliderController::class, 'index'])->name('slider.index');
     Route::match(['get','post'], 'slider/create', [SliderController::class, 'create'])->name('slider.create');
+    Route::match(['get','put'], 'slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
 });
+
 
 
 // Route::get('/dashboard', function () {
