@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::as('front.')->group(function(){
 // backend routes
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    //Slider
+    Route::get('/slider', [SliderController::class, 'index'])->name('slider.index');
+    Route::match(['get','post'], 'slider/create', [SliderController::class, 'create'])->name('slider.create');
 });
 
 

@@ -79,11 +79,11 @@
                 </li>
 
 
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('slider.*') ? 'active' : '' }}" href="{{ route('slider.index') }}">
                         <i class="mdi mdi-puzzle-outline"></i> <span>Slider</span>
                     </a>
-                </li> --}}
+                </li>
 
 
             </ul>
