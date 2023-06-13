@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Slider')
+@section('title', 'Create Slider')
 @section('page-title', 'Slider')
 
 @section('content')

@@ -25,14 +25,14 @@
             @forelse ($sliders as $key => $slider)
                 <tr>
                     <th scope="row"> {{ $sliders->perPage() * ($sliders->currentPage() - 1) + ++$key }} </th>
-                    <td>
+                    {{-- <td>
                         <img src="{{ $slider->background }}" alt="{{ $slider->background }}"
                             class="rounded avatar-lg shadow">
-                    </td>
-                    {{-- <td>
+                    </td> --}}
+                    <td>
                         <img src="{{ getAssetUrl($slider->background) }}" alt="{{ $slider->background }}"
                             class="rounded avatar-lg shadow">
-                    </td> --}}
+                    </td>
                     <td>{{ $slider->title }}</td>
                     <td class="text-capitalize">{{ $slider->alignment }}</td>
                     <td>
