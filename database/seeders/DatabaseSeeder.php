@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +20,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@vegist.com',
             'password' => bcrypt('123'),
         ]);
+
+        Category::factory(10)->create();
+
+        $this->call(SliderSeeder::class);
     }
 }
