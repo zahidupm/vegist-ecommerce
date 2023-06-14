@@ -78,7 +78,7 @@
                     </a>
                 </li>
 
-
+                {{-- slider --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarSlider" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSlider">
                         <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Slider</span>
@@ -91,6 +91,24 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('slider.create')}}" class="nav-link {{ request()->routeIs('slider.create') ? 'active' : ''}}" data-key="t-crm"> Create </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- category --}}
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarCategory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCategory">
+                        <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Category</span>
+                    </a>
+
+                    <div class="collapse menu-dropdown {{ request()->routeIs('slider.*') ? 'show' : ''}}" id="sidebarCategory">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('category.index')}}" class="nav-link {{ request()->routeIs('category.index') ? 'active' : ''}}" data-key="t-crm"> View All </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('category.create')}}" class="nav-link {{ request()->routeIs('category.create') ? 'active' : ''}}" data-key="t-crm"> Create </a>
                             </li>
                         </ul>
                     </div>

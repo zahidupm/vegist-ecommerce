@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -30,15 +31,19 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function(){
     //Slider
     Route::get('/slider', [SliderController::class, 'index'])->name('slider.index');
     Route::match(['get','post'], 'slider/create', [SliderController::class, 'create'])->name('slider.create');
-    Route::match(['get','put'], 'slider/edit', [SliderController::class, 'edit'])->name('slider.edit');
+    Route::match(['get','put'], 'slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
     Route::delete('slider/delete/{id}', [SliderController::class, 'delete'])->name('slider.delete');
+
+
+    //Category
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::match(['get','post'], 'category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::match(['get','put'], 'category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::delete('category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 });
 
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
