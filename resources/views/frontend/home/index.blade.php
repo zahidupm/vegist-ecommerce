@@ -39,7 +39,10 @@
 </section>
 <!-- banner end -->
 <!-- Category image slide -->
-<section class="category-img1 section-t-padding section-b-padding">
+
+<x-frontend.category :categories="$categories" title="Shop by Category"/>
+
+{{-- <section class="category-img1 section-t-padding section-b-padding">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -159,7 +162,8 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
+
 <!-- Category image slide -->
 <!-- Trending Products Start -->
 <section class="h-t-products1 section-t-padding section-b-padding">
