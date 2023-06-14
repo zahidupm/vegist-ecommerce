@@ -94,4 +94,30 @@ class SliderController extends Controller
     }
 
 
+    // delete a slider
+    // public function delete($id){
+    //     $slider = Slider::find($id);
+    //     // delete image
+    //     Storage::delete('/' . $slider->background);
+
+    //     $slider->delete();
+
+    //     flash()->addSuccess('Deleted Successfully');
+    //     return redirect()->back()->with('Success', 'Deleted slider successfully');
+    // }
+
+    // Delete a slider
+    public function delete($id)
+    {
+        $slider = Slider::find($id);
+        // Delete image
+        Storage::delete('/' . $slider->background);
+
+        $slider->delete();
+        // Return
+        flash()->addSuccess('Deleted Successfully');
+        return redirect()->back()->with('success', 'Slider Deleted Successfully');
+    }
+
+
 }

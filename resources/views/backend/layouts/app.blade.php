@@ -21,6 +21,8 @@
     <link href="{{ asset('backend') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('backend') }}/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @stack('css')
 </head>
@@ -69,17 +71,17 @@
                             </span>
                         </button>
 
-                    
+
                     </div>
 
                     <div class="d-flex align-items-center">
 
-                       
 
-                     
-                      
 
-                     
+
+
+
+
 
                         <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button"
@@ -96,7 +98,7 @@
                             </button>
                         </div>
 
-                        
+
 
                         <div class="dropdown ms-sm-3 header-item topbar-user">
                             <button type="button" class="btn shadow-none" id="page-header-user-dropdown"
@@ -119,7 +121,7 @@
                                 <a class="dropdown-item" href="pages-profile.html"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
-                                
+
                                 <a class="dropdown-item" href="auth-logout-basic.html"><i
                                         class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle" data-key="t-logout">Logout</span></a>
@@ -129,9 +131,9 @@
                 </div>
             </div>
         </header>
-      
+
         @include('backend.layouts.menu')
-       
+
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
 
@@ -179,7 +181,7 @@
                                 document.write(new Date().getFullYear())
                             </script> &copy; Pixcafe Nettwork.
                         </div>
-                      
+
                     </div>
                 </div>
             </footer>
@@ -197,7 +199,7 @@
     </button>
     <!--end back-to-top-->
 
-   
+
 
     <!-- JAVASCRIPT -->
     <script src="{{ asset('backend') }}/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
