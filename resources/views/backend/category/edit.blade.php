@@ -45,3 +45,14 @@
     </form>
 </section>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function(){
+            $('input#name').keyup(function(){
+                let val = $(this).val();
+                $('input#slug').val(val.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, ""));
+            });
+        });
+    </script>
+@endpush

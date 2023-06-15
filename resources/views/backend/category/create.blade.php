@@ -23,7 +23,7 @@
         <!-- Basic Input -->
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="sub_title" name="slug" value="{{ old('slug') }}">
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -44,3 +44,16 @@
     </form>
 </section>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function(){
+            $('input#name').keyup(function(){
+                let val = $(this).val();
+                $('input#slug').val(val.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, ""));
+            });
+        });
+    </script>
+@endpush
+
+

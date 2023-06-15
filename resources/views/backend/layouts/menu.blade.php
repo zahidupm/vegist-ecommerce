@@ -102,13 +102,31 @@
                         <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Category</span>
                     </a>
 
-                    <div class="collapse menu-dropdown {{ request()->routeIs('slider.*') ? 'show' : ''}}" id="sidebarCategory">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('category.*') ? 'show' : ''}}" id="sidebarCategory">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('category.index')}}" class="nav-link {{ request()->routeIs('category.index') ? 'active' : ''}}" data-key="t-crm"> View All </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('category.create')}}" class="nav-link {{ request()->routeIs('category.create') ? 'active' : ''}}" data-key="t-crm"> Create </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- product --}}
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarProduct" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduct">
+                        <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Product</span>
+                    </a>
+
+                    <div class="collapse menu-dropdown {{ request()->routeIs('product.*') ? 'show' : ''}}" id="sidebarProduct">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('product.index')}}" class="nav-link {{ request()->routeIs('product.index') ? 'active' : ''}}" data-key="t-crm"> View All </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('product.create')}}" class="nav-link {{ request()->routeIs('product.create') ? 'active' : ''}}" data-key="t-crm"> Create </a>
                             </li>
                         </ul>
                     </div>
