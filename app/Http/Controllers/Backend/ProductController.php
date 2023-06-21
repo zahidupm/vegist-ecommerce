@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -28,6 +27,7 @@ class ProductController extends Controller
                 'description' => 'nullable',
                 'category_id' => 'required|not_in:none',
                 'price' => 'required|numeric',
+                'gallery' => 'required',
             ]);
 
             $product = Product::create([
@@ -57,7 +57,7 @@ class ProductController extends Controller
             }
 
             flash()->addSuccess('Product crated successfully');
-            return redirect()->back()->with('success', 'Product created successfully');
+            return redirect()->route('product.index');
         }
 
         $categories = Category::get(['id', 'name']);
@@ -68,7 +68,6 @@ class ProductController extends Controller
 
     public function edit(Request $request, $id){
         $product = Product::findOrFail($id);
-        $gallery = Gallery::findOrFail($id);
 
         if($request->isMethod('PUT')){
             $request->validate([
@@ -78,6 +77,7 @@ class ProductController extends Controller
                 'description' => 'nullable',
                 'category_id' => 'required|not_in:none',
                 'price' => 'required|numeric',
+                'galley' => 'nullable',
             ]);
 
 
@@ -92,27 +92,25 @@ class ProductController extends Controller
             ]);
 
 
-            $thumb = $gallery->gallery;
+           //Gallery
+           if(!empty($request->file('gallery'))){
 
-            if(!empty($request->file('gallery'))){
-                Storage::delete('/products' . $thumb);
+            foreach($request->file('gallery') as $image){
+                $thumb = time() . '-' . str_replace(' ', '--', $image->getClientOriginalName());
 
-                foreach($request->file('gallery') as $image){
-                    $thumb = time() . '-' . str_replace(' ', '--', $image->getClientOriginalName());
+                // store the image
+                $image->storeAs('/products', $thumb);
 
-                    // store the image
-                    $image->storeAs('/products', $thumb);
-
-                    $gallery->update([
-                        'name' => $thumb,
-                        'product_id' => $product->id,
-                    ]);
-                }
+               Gallery::create([
+                    'name' => $thumb,
+                    'product_id' => $product->id,
+                ]);
             }
+        }
 
 
             flash()->addSuccess('Product updated successfully');
-            return redirect()->back()->with('success', 'Product updated successfully');
+            return redirect()->route('product.index');
         }
 
         $categories = Category::get(['id', 'name']);

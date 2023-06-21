@@ -21,8 +21,9 @@
     <link href="{{ asset('backend') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('backend') }}/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
 
     <x-head.tinymce-config />
 
