@@ -86,8 +86,8 @@
                     <!-- Basic File input -->
                     <div class="mb-3">
                         <label for="gallery" class="form-label">Gallery</label>
-                        <input type="file" class="form-control" id="gallery" name="gallery[]" multiple
-                            value="{{ $product->galllery }}">
+                        <input type="file" class="form-control filepond" id="gallery" name="gallery[]" multiple
+                            accept="image/png, image/jpeg, image/gif">
                         @error('gallery')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -111,7 +111,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('input#name').keyup(function() {
+            $('input#title').keyup(function() {
                 let val = $(this).val();
                 $('input#slug').val(val.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, ""));
             });

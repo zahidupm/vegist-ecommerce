@@ -4,15 +4,15 @@
 @section('page-title', 'Product')
 
 @section('content')
-<section class="bg-white p-4">
-    <div class="text-end">
-        <!-- Base Buttons -->
-        <a href="{{ route('product.create') }}" class="btn btn-primary waves-effect waves-light">Create</a>
-    </div>
-    <!-- Striped Rows -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
+    <section class="bg-white p-4">
+        <div class="text-end">
+            <!-- Base Buttons -->
+            <a href="{{ route('product.create') }}" class="btn btn-primary waves-effect waves-light">Create</a>
+        </div>
+        <!-- Striped Rows -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Thumb</th>
@@ -21,54 +21,54 @@
                     <th scope="col">Category</th>
                     <th scope="col">Action</th>
                 </tr>
-            </tr>
-        </thead>
-        <tbody>
+                </tr>
+            </thead>
+            <tbody>
 
-            @forelse ($products as $key => $product)
-                <tr>
-                    <th scope="row"> {{ $products->perPage() * ($products->currentPage() - 1) + ++$key }} </th>
-                    {{-- <td>
+                @forelse ($products as $key => $product)
+                    <tr>
+                        <th scope="row"> {{ $products->perPage() * ($products->currentPage() - 1) + ++$key }} </th>
+                        {{-- <td>
                         <img src="{{ $slider->background }}" alt="{{ $slider->background }}"
                             class="rounded avatar-lg shadow">
                     </td> --}}
-                    <td>
-                        <!-- Rounded Image -->
-                        <img class="rounded shadow" alt="" width="200"
-                            src="{{ getAssetUrl($product->gallery[0]->name, '/uploads/products') }}">
-                    </td>
-                    <td>{{ $product->title }}</td>
-                    <td>{{ $product->slug }}</td>
-                    <td>{{ $product->category->name }}</td>
-                    <td>
-                        <div class="hstack gap-3 flex-wrap">
-                            <a href="{{ route('product.edit', $product->id)}}" class="link-success fs-15"><i
-                                    class="ri-edit-2-line"></i></a>
+                        <td>
+                            <!-- Rounded Image -->
+                            <img class="rounded shadow" alt="" width="80"
+                                src="{{ count($product->gallery) > 0 ? getAssetUrl($product->gallery[0]->name, '/uploads/products') : '' }}">
+                        </td>
+                        <td>{{ $product->title }}</td>
+                        <td>{{ $product->slug }}</td>
+                        <td>{{ $product->category->name }}</td>
+                        <td>
+                            <div class="hstack gap-3 flex-wrap">
+                                <a href="{{ route('product.edit', $product->id) }}" class="link-success fs-15"><i
+                                        class="ri-edit-2-line"></i></a>
 
-                            <a href="javascript::void(0)" onclick="deleteRecord()"
-                                class="link-danger fs-15"><i class="ri-delete-bin-line"></i></a>
-
-
-                            <form id="delete-form-"
-                                action="" method="POST"
-                                style="display: none">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">No Product Found!</td>
-                </tr>
-            @endforelse
+                                <a href="javascript::void(0)" onclick="deleteRecord({{ $product->id }})"
+                                    class="link-danger fs-15"><i class="ri-delete-bin-line"></i></a>
 
 
-        </tbody>
-    </table>
-</section>
+                                <form id="delete-form-{{ $product->id }}"
+                                    action="{{ route('product.delete', $product->id) }}" method="POST"
+                                    style="display: none">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4">No Product Found!</td>
+                    </tr>
+                @endforelse
+
+
+            </tbody>
+        </table>
+    </section>
 
 @endsection
 

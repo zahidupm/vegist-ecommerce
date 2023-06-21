@@ -7,18 +7,21 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $products = Product::latest()->paginate(10);
 
         return view('backend.product.index', compact('products'));
     }
 
-    public function create(Request $request){
-
-        if($request->isMethod('POST')){
+    public function create(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            // dd($request->all());
 
             $request->validate([
                 'title' => 'required|string|max:255',
@@ -39,17 +42,16 @@ class ProductController extends Controller
                 'price' => $request->price,
             ]);
 
-
             //Gallery
-            if(!empty($request->file('gallery'))){
+            if (!empty($request->file('gallery'))) {
 
-                foreach($request->file('gallery') as $image){
+                foreach ($request->file('gallery') as $image) {
                     $thumb = time() . '-' . str_replace(' ', '--', $image->getClientOriginalName());
 
                     // store the image
                     $image->storeAs('/products', $thumb);
 
-                   Gallery::create([
+                    Gallery::create([
                         'name' => $thumb,
                         'product_id' => $product->id,
                     ]);
@@ -62,14 +64,14 @@ class ProductController extends Controller
 
         $categories = Category::get(['id', 'name']);
         // return view('backend.product.create', compact('categories'));
-        return view('backend.product.create', ['categories'=> $categories]);
+        return view('backend.product.create', ['categories' => $categories]);
     }
 
-
-    public function edit(Request $request, $id){
+    public function edit(Request $request, $id)
+    {
         $product = Product::findOrFail($id);
 
-        if($request->isMethod('PUT')){
+        if ($request->isMethod('PUT')) {
             $request->validate([
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|max:255',
@@ -77,9 +79,8 @@ class ProductController extends Controller
                 'description' => 'nullable',
                 'category_id' => 'required|not_in:none',
                 'price' => 'required|numeric',
-                'galley' => 'nullable',
+                'gallery' => 'nullable',
             ]);
-
 
             // Slider Update
             $product->update([
@@ -91,23 +92,21 @@ class ProductController extends Controller
                 'price' => $request->price,
             ]);
 
+            //Gallery
+            if (!empty($request->file('gallery'))) {
 
-           //Gallery
-           if(!empty($request->file('gallery'))){
+                foreach ($request->file('gallery') as $image) {
+                    $thumb = time() . '-' . str_replace(' ', '--', $image->getClientOriginalName());
 
-            foreach($request->file('gallery') as $image){
-                $thumb = time() . '-' . str_replace(' ', '--', $image->getClientOriginalName());
+                    // store the image
+                    $image->storeAs('/products', $thumb);
 
-                // store the image
-                $image->storeAs('/products', $thumb);
-
-               Gallery::create([
-                    'name' => $thumb,
-                    'product_id' => $product->id,
-                ]);
+                    Gallery::create([
+                        'name' => $thumb,
+                        'product_id' => $product->id,
+                    ]);
+                }
             }
-        }
-
 
             flash()->addSuccess('Product updated successfully');
             return redirect()->route('product.index');
@@ -117,6 +116,15 @@ class ProductController extends Controller
 
         return view('backend.product.edit', compact('product', 'categories'));
     }
+
+    // Delete a Product
+    public function delete($id)
+    {
+        $product = Product::findOrFail($id);
+        Storage::delete('/products' . $product->gallery);
+        $product->delete();
+
+        flash()->addSuccess('Product deleted successfully');
+        return redirect()->route('product.index');
+    }
 }
-
-

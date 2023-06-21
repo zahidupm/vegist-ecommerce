@@ -81,9 +81,19 @@
                     </div>
 
                     <!-- Basic File input -->
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="gallery" class="form-label">Gallery</label>
                         <input type="file" class="form-control" id="gallery" name="gallery[]" multiple>
+                        @error('gallery')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div> --}}
+
+                    <!-- Default File Input Example -->
+                    <div class="mb-3">
+                        <label for="gallery" class="form-label">Gallery</label>
+                        <input class="form-control filepond" type="file" id="gallery" name="gallery[]" multiple
+                            accept="image/png, image/jpeg, image/gif">
                         @error('gallery')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
