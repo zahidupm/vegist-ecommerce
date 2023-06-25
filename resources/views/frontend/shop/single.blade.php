@@ -40,7 +40,7 @@
 
                             </ul>
                         </div>
-                        <div class="col-xl-7 col-lg-6 col-md-6 col-12 pro-info">
+                        <div class="col-xl-7 col-lg-6 col-md-6 col-12 pro-info product_data">
                             <h4>{{ $product->title }}</h4>
                             <div class="rating">
                                 <i class="fa fa-star d-star"></i>
@@ -80,14 +80,19 @@
                                 <div class="plus-minus">
                                     <span>
                                         <a href="javascript:void(0)" class="minus-btn text-black">-</a>
-                                        <input type="text" name="quantity" value="1">
+                                        <input type="text" name="quantity" class="quantity" value="1">
                                         <a href="javascript:void(0)" class="plus-btn text-black">+</a>
                                     </span>
                                 </div>
                             </div>
                             <div class="pro-btn">
+                                <input type="hidden" class="product_id" name="product_id" value="{{ $product->id }}">
                                 <a href="wishlist.html" class="btn btn-style1"><span><i class="fa fa-heart"></i></span></a>
-                                <a href="cart.html" class="btn btn-style1"><span><i class="fa fa-shopping-bag"></i> Add
+                                {{-- <a href="javascript:void(0)" class="btn btn-style1"><span><i class="fa fa-shopping-bag"></i>
+                                        Add
+                                        to cart</span></a> --}}
+                                <a href="javascript::void(0)" class="btn btn-style1 add-to-cart-btn"><span><i
+                                            class="fa fa-shopping-bag"></i> Add
                                         to cart</span></a>
                                 <a href="checkout-1.html" class="btn btn-style1"><span>Buy now</span></a>
                             </div>
@@ -283,6 +288,47 @@
             x = offsetX / zoomer.offsetWidth * 100
             y = offsetY / zoomer.offsetHeight * 100
             zoomer.style.backgroundPosition = x + '% ' + y + '%';
+        }
+
+
+        $(document).ready(function() {
+            cartload();
+            // Add To cart via cookie
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.product_id').val();
+                var quantity = $(this).closest('.product_data').find('.quantity').val();
+
+
+                $.ajax({
+                    url: '{{ route('front.cart.store') }}',
+                    method: "POST",
+                    data: {
+                        'quantity': quantity,
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        cartload();
+                    },
+                });
+            });
+        });
+
+        function cartload() {
+            $.ajax({
+                url: '{{ route('front.cart.load') }}',
+                method: "GET",
+                success: function(response) {
+                    $('.cart-icon-wrap').html('');
+                    var parsed = jQuery.parseJSON(response)
+                    var value = parsed; //Single Data Viewing
+                    $('.cart-icon-wrap').append($(
+                        '<span class="cart-icon"><i class="icon-handbag"></i></span><span id="cart-total" class="bigcounter">' +
+                        value[
+                            'totalcart'] + '</span>'));
+                }
+            });
         }
     </script>
 @endpush

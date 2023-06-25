@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,10 @@ Route:: as ('front.')->group(function () {
     Route::get('/', [PageController::class, 'home'])->name('home');
     Route::get('shop', [PageController::class, 'shop'])->name('shop');
     Route::get('product/{slug}', [PageController::class, 'singleProduct'])->name('shop.single');
+
+    // add to cart
+    Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('cart.store');
+    Route::get('load-cookie-data', [CartController::class, 'loadCookieData'])->name('cart.load');
 });
 
 // backend routes

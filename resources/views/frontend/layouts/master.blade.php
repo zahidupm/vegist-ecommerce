@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- title -->
     <title>@yield('title')</title>
 
@@ -658,6 +660,16 @@
     <script src="{{ asset('frontend') }}/js/swiper.min.js"></script>
     <!-- custom -->
     <script src="{{ asset('frontend') }}/js/custom.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
 
     @stack('js')
 </body>
