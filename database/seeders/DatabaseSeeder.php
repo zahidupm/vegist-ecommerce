@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         Product::factory(50)->create()->each(function ($product) {
             for ($i = 0; $i < rand(3, 6); $i++) {
                 Gallery::create([
-                    'name' => 'https://source.unsplash.com/random/250x250/?fruits,drinks&' . rand(2, 421342),
+                    'name' => 'https://source.unsplash.com/random/1040x450/?fruits,drinks&' . rand(2, 421342),
                     'product_id' => $product->id
                 ]);
             }
