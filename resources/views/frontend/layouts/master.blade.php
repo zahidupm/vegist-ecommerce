@@ -35,6 +35,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/custom.css">
 
+    {{-- toastify --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     @stack('css')
 </head>
 
@@ -107,8 +110,8 @@
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img class="img-fluid" src="{{ asset('frontend') }}/image/c-icon8.png"
-                                                    alt="">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('frontend') }}/image/c-icon8.png" alt="">
                                                 <span class="cur-name">USD</span>
                                             </a>
                                         </li>
@@ -332,7 +335,7 @@
                 </li>
                 <li class="mini-cart-btns">
                     <div class="cart-btns">
-                        <a href="cart.html" class="btn btn-style2">View cart</a>
+                        <a href="{{ route('front.cart.index')}}" class="btn btn-style2">View cart</a>
                         <a href="checkout-1.html" class="btn btn-style2">Checkout</a>
                     </div>
                 </li>
@@ -660,6 +663,7 @@
     <script src="{{ asset('frontend') }}/js/swiper.min.js"></script>
     <!-- custom -->
     <script src="{{ asset('frontend') }}/js/custom.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
         $(document).ready(function() {
@@ -669,6 +673,23 @@
                 }
             });
         });
+
+        function toast(message) {
+            Toastify({
+                text: message,
+                duration: 3000,
+                // destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
     </script>
 
     @stack('js')

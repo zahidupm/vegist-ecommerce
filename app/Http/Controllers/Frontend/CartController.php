@@ -14,6 +14,7 @@ class CartController extends Controller
     {
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
 
+        return view('frontend.cart.index');
     }
     public function addToCart(Request $request)
     {
@@ -61,7 +62,7 @@ class CartController extends Controller
                 $item_data = json_encode($cart_data);
                 $minutes = 60;
                 Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
-                return response()->json(['status' => '"' . $prod_name . '" Added to Cart']);
+                return response()->json(['message' => 'Added to Cart']);
             }
         }
 

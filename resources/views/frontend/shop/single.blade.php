@@ -309,6 +309,8 @@
                         'product_id': product_id,
                     },
                     success: function(response) {
+                        console.log(response);
+                        toast(response.message);
                         cartload();
                     },
                 });
