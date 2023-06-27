@@ -320,13 +320,17 @@
                 url: '{{ route('front.cart.load') }}',
                 method: "GET",
                 success: function(response) {
-                    $('.cart-icon-wrap').html('');
-                    var parsed = jQuery.parseJSON(response)
-                    var value = parsed; //Single Data Viewing
-                    $('.cart-icon-wrap').append($(
-                        '<span class="cart-icon"><i class="icon-handbag"></i></span><span id="cart-total" class="bigcounter">' +
-                        value[
-                            'totalcart'] + '</span>'));
+                    // $('.cart-icon-wrap').html('');
+                    // var parsed = jQuery.parseJSON(response)
+                    // var value = parsed; //Single Data Viewing
+                    // $('.cart-icon-wrap').append($(
+                    //     '<span class="cart-icon"><i class="icon-handbag"></i></span><span id="cart-total" class="bigcounter">' +
+                    //     value['totalcart'] + '</span>'));
+
+                    console.log(response);
+                    $('.bigcounter').html(response.totalcart);
+                    $('.cart-item-loop').html(response.html);
+                    $('.subtotal-price').html(response.subtotal);
                 }
             });
         }

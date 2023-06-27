@@ -217,7 +217,7 @@
                                                 <a href="javascript:void(0)" class="cart-count">
                                                     <span class="cart-icon-wrap">
                                                         <span class="cart-icon"><i class="icon-handbag"></i></span>
-                                                        <span id="cart-total" class="bigcounter">5</span>
+                                                        <span id="cart-total" class="bigcounter">0</span>
                                                     </span>
                                                 </a>
                                             </div>
@@ -242,7 +242,7 @@
                 </p>
             </div>
             <ul class="cart-item-loop">
-                <li class="cart-item">
+                {{-- <li class="cart-item">
                     <div class="cart-img">
                         <a href="product.html">
                             <img src="{{ asset('frontend') }}/image/cart-img.jpg" alt="cart-image"
@@ -321,7 +321,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> --}}
             </ul>
             <ul class="subtotal-title-area">
                 <li class="subtotal-info">
