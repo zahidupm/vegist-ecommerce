@@ -240,7 +240,7 @@
             <div class="cart-item-title">
                 <p>
                     <span class="cart-count-desc">There are</span>
-                    <span class="cart-count-item bigcounter">4</span>
+                    <span class="cart-count-item bigcounter">0</span>
                     <span class="cart-count-desc">Products</span>
                 </p>
             </div>
@@ -335,7 +335,7 @@
                 </li>
                 <li class="mini-cart-btns">
                     <div class="cart-btns">
-                        <a href="{{ route('front.cart.index')}}" class="btn btn-style2">View cart</a>
+                        <a href="{{ route('front.cart.index') }}" class="btn btn-style2">View cart</a>
                         <a href="checkout-1.html" class="btn btn-style2">Checkout</a>
                     </div>
                 </li>

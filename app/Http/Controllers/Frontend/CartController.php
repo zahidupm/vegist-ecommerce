@@ -12,9 +12,14 @@ class CartController extends Controller
 
     public function index()
     {
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+        if(Cookie::get('shopping_cart')){
+            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+            $carts = json_decode($cookie_data, false);
+        }else {
+            $carts = [];
+        }
 
-        return view('frontend.cart.index');
+        return view('frontend.cart.index', ['carts'=> $carts]);
     }
     public function addToCart(Request $request)
     {
