@@ -61,8 +61,8 @@
                                         <span
                                             class="item-total">${{ number_format($cart->item_price * $cart->item_quantity, 2) }}
                                             USD</span>
-                                        <span class="ms-3"><a href="javascript:void(0)" class="text-danger"><i
-                                                    class="fa fa-remove"></i></a></span>
+                                        <span class="ms-3"><a href="javascript:void(0)" data-id="{{ $cart->item_id }}"
+                                                class="text-danger remove-cart-item"><i class="fa fa-remove"></i></a></span>
                                     </div>
                                 </div>
                             </div>
@@ -72,23 +72,6 @@
                     @endforelse
 
                 </div>
-                {{-- <div class="col-xl-3 col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                    <div class="cart-total">
-                        <div class="cart-price">
-                            <span>Subtotal</span>
-                            <span class="total">${{ $total ? number_format($total, 2) : 0 }} USD</span>
-                        </div>
-                        <div class="cart-price">
-                            <span class="">Dicount</span>
-                            <span class="discount">$0.00 USD</span>
-                        </div>
-                        <div class="shop-total">
-                            <span>Total</span>
-                            <span class="total-amount">${{ $total ? number_format($total, 2) : 0 }} USD</span>
-                        </div>
-                        <a href="javascript:void(0)" class="check-link btn btn-style1">Checkout</a>
-                    </div>
-                </div> --}}
 
                 <div class="col-xl-3 col-xs-12 col-sm-12 col-md-12 col-lg-4">
                     <div class="cart-total">
