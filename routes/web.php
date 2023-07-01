@@ -41,6 +41,8 @@ Route:: as ('front.')->group(function () {
     Route::post('add-to-wish', [WishController::class, 'addToWish'])->name('wish.store');
     // Load Cookie data
     Route::get('load-wish-data', [WishController::class, 'loadCookieData'])->name('wish.load');
+    // Wish Page
+    Route::get('wish', [WishController::class, 'index'])->name('wish.index');
 });
 
 // backend routes

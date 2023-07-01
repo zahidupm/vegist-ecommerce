@@ -292,31 +292,31 @@
         }
 
 
-        $(document).ready(function() {
-            cartload();
-            // Add To cart via cookie
-            $('.add-to-cart-btn').click(function(e) {
-                e.preventDefault();
+        // $(document).ready(function() {
+        //     cartload();
+        //     // Add To cart via cookie
+        //     $('.add-to-cart-btn').click(function(e) {
+        //         e.preventDefault();
 
-                var product_id = $(this).closest('.product_data').find('.product_id').val();
-                var quantity = $(this).closest('.product_data').find('.quantity').val();
+        //         var product_id = $(this).closest('.product_data').find('.product_id').val();
+        //         var quantity = $(this).closest('.product_data').find('.quantity').val();
 
 
-                $.ajax({
-                    url: '{{ route('front.cart.store') }}',
-                    method: "POST",
-                    data: {
-                        'quantity': quantity,
-                        'product_id': product_id,
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        toast(response.message);
-                        cartload();
-                    },
-                });
-            });
-        });
+        //         $.ajax({
+        //             url: '{{ route('front.cart.store') }}',
+        //             method: "POST",
+        //             data: {
+        //                 'quantity': quantity,
+        //                 'product_id': product_id,
+        //             },
+        //             success: function(response) {
+        //                 console.log(response);
+        //                 toast(response.message);
+        //                 cartload();
+        //             },
+        //         });
+        //     });
+        // });
 
         function cartload() {
             $.ajax({

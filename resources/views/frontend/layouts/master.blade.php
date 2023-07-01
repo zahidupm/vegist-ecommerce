@@ -209,7 +209,7 @@
                                         </div>
                                     </li>
                                     <li class="side-wrap wishlist-wrap">
-                                        <a href="javascript:void(0)" class="header-wishlist">
+                                        <a href="{{ route('front.wish.index') }}" class="header-wishlist">
                                             <span class="wish-icon-wrap">
                                                 <span class="wishlist-icon"><i class="icon-heart"></i></span>
                                                 <span class="wishlist-counter">0</span>
@@ -674,6 +674,32 @@
     <script>
         $(document).ready(function() {
             cartload();
+            // Add To cart via cookie
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.product_id').val();
+                var quantity = $(this).closest('.product_data').find('.quantity').val();
+
+
+                $.ajax({
+                    url: '{{ route('front.cart.store') }}',
+                    method: "POST",
+                    data: {
+                        'quantity': quantity,
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        toast(response.message);
+                        cartload();
+                    },
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            cartload();
             wishload();
             $.ajaxSetup({
                 headers: {
@@ -734,10 +760,10 @@
                 url: '{{ route('front.wish.load') }}',
                 method: "GET",
                 success: function(response) {
-                    $('.wishlist-counter').html('');
+                    $('.wish-icon-wrap').html('');
                     var parsed = jQuery.parseJSON(response)
                     var value = parsed; //Single Data Viewing
-                    $('.wishlist-counter').append($(
+                    $('.wish-icon-wrap').append($(
                         '<span class="wishlist-icon"><i class="icon-heart"></i></span> <span class="wishlist-counter">' +
                         value['totalwish'] + '</span>'));
 
@@ -748,6 +774,7 @@
                 }
             })
         }
+
 
 
 

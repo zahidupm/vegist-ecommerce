@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Cookie;
 
 class WishController extends Controller
 {
+    public function index()
+    {
+        if (Cookie::get('shopping_wish')) {
+            $cookie_data = stripslashes(Cookie::get('shopping_wish'));
+            $wishes = json_decode($cookie_data, false);
+        } else {
+            $wishes = [];
+        }
+
+        return view('frontend.wish.index', ['wishes' => $wishes]);
+    }
+
     public function addToWish(Request $request)
     {
         // return ['hello'];
