@@ -43,6 +43,8 @@ Route:: as ('front.')->group(function () {
     Route::get('load-wish-data', [WishController::class, 'loadCookieData'])->name('wish.load');
     // Wish Page
     Route::get('wish', [WishController::class, 'index'])->name('wish.index');
+    // remove form wish
+    Route::delete('remove-from-wish', [WishController::class, 'removeWishItem'])->name('wish.remove');
 });
 
 // backend routes

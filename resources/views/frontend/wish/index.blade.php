@@ -39,16 +39,18 @@
                                          </div>
                                      </div>
 
-                                     <div class="pro-qty">
+                                     <div class="pro-qty d-none">
                                          <span class="qty">Quantity:</span>
                                          <div class="plus-minus">
                                              <span>
                                                  <a href="javascript:void(0)" class="minus-btn text-black">-</a>
-                                                 <input type="text" name="quantity" class="quantity" value="1">
-                                                 <a href="javascript:void(0)" class="plus-btn text-black">+</a>
+                                                 <input type="text" name="quantity" class="quantity hidden"
+                                                     value="{{ $wish->item_quantity }}">
+                                                 <a href="javascript:void(0)" class="plus-btn text-black hidden">+</a>
                                              </span>
                                          </div>
                                      </div>
+
 
                                      <div class="pro-btn">
                                          <input type="hidden" class="product_id" name="product_id"
@@ -56,7 +58,9 @@
                                          <a href="javascript::void(0)" class="btn btn-style1 add-to-cart-btn"><span><i
                                                      class="fa fa-shopping-bag"></i> Add
                                                  to cart</span></a>
-                                         <a href="checkout-1.html" class="btn btn-style1"><span>Buy now</span></a>
+                                         <span class="ms-3"><a href="javascript:void(0)" data-id="{{ $wish->item_id }}"
+                                                 class="text-danger remove-wish-item"><i
+                                                     class="fa fa-remove"></i></a></span>
                                      </div>
 
                                      {{-- <div class="qty-item">
@@ -64,7 +68,9 @@
                                          <a href="checkout-1.html" class="add-wishlist">Buy now</a>
                                      </div> --}}
                                      <div class="all-pro-price">
-                                         <span class="new-price">${{ number_format($wish->item_price) }} USD</span>
+                                         <span
+                                             class="new-price">${{ number_format($wish->item_price * $wish->item_quantity) }}
+                                             USD</span>
                                          <span class="old-price"><del>$400.00 USD</del></span>
                                      </div>
                                  </div>
