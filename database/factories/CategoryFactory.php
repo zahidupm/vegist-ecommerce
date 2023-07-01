@@ -17,12 +17,12 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->words(rand(1,3), true);
+        $name = fake()->words(rand(1, 3), true);
 
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'thumbnail' => 'https://source.unsplash.com/random/250x250/?fruits,drinks&'.rand(2,421342)
+            'thumbnail' => 'https://picsum.photos/250/250/?fruits,drinks&' . rand(2, 421342),
         ];
     }
 }

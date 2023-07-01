@@ -209,9 +209,11 @@
                                         </div>
                                     </li>
                                     <li class="side-wrap wishlist-wrap">
-                                        <a href="wishlist-empty.html" class="header-wishlist">
-                                            <span class="wishlist-icon"><i class="icon-heart"></i></span>
-                                            <span class="wishlist-counter">0</span>
+                                        <a href="javascript:void(0)" class="header-wishlist">
+                                            <span class="wish-icon-wrap">
+                                                <span class="wishlist-icon"><i class="icon-heart"></i></span>
+                                                <span class="wishlist-counter">0</span>
+                                            </span>
                                         </a>
                                     </li>
                                     <li class="side-wrap cart-wrap">
@@ -672,6 +674,7 @@
     <script>
         $(document).ready(function() {
             cartload();
+            wishload();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -724,6 +727,27 @@
             })
 
         });
+
+        // wish
+        function wishload() {
+            $.ajax({
+                url: '{{ route('front.wish.load') }}',
+                method: "GET",
+                success: function(response) {
+                    $('.wishlist-counter').html('');
+                    var parsed = jQuery.parseJSON(response)
+                    var value = parsed; //Single Data Viewing
+                    $('.wishlist-counter').append($(
+                        '<span class="wishlist-icon"><i class="icon-heart"></i></span> <span class="wishlist-counter">' +
+                        value['totalwish'] + '</span>'));
+
+                    console.log(response);
+                    // $('.wishlist-counter').html(response.totalwish);
+                    // $('.cart-item-loop').html(response.html);
+                    // $('.subtotal-price').html(response.subtotal);
+                }
+            })
+        }
 
 
 

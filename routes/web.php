@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\WishController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,11 @@ Route:: as ('front.')->group(function () {
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     // remove form cart
     Route::delete('remove-from-cart', [CartController::class, 'removeCartItem'])->name('cart.remove');
+
+    //add to wish
+    Route::post('add-to-wish', [WishController::class, 'addToWish'])->name('wish.store');
+    // Load Cookie data
+    Route::get('load-wish-data', [WishController::class, 'loadCookieData'])->name('wish.load');
 });
 
 // backend routes

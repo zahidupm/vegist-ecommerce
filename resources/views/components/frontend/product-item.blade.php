@@ -13,7 +13,7 @@
     {!! productLabel($product) !!}
     <div class="pro-icn">
         <a href="wishlist.html" class="w-c-q-icn"><i class="fa fa-heart"></i></a>
-        <a href="cart.html" class="w-c-q-icn"><i class="fa fa-shopping-bag"></i></a>
+        <a href="javascript:void(0)" class="w-c-q-icn add-to-cart-btn"><i class="fa fa-shopping-bag"></i></a>
         <a href="javascript:void(0)" class="w-c-q-icn" data-bs-toggle="modal"
             data-bs-target="#product-{{ $product->id }}-Modal"><i class="fa fa-eye"></i></a>
     </div>
@@ -110,3 +110,45 @@
     </div>
 </section>
 <!-- quick veiw end -->
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+                    cartload();
+                    // Add To cart via cookie
+                    $('.add-to-cart-btn').click(function(e) {
+                        e.preventDefault();
+
+                        var product_id = $(this).closest('.product_data').find('.product_id').val();
+                        var quantity = $(this).closest('.product_data').find('.quantity').val();
+
+
+                        $.ajax({
+                            url: '{{ route('front.cart.store') }}',
+                            method: "POST",
+                            data: {
+                                'quantity': quantity,
+                                'product_id': product_id,
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                toast(response.message);
+                                cartload();
+                            },
+                        });
+                    });
+
+                    function cartload() {
+                        $.ajax({
+                            url: '{{ route('front.cart.load') }}',
+                            method: "GET",
+                            success: function(response) {
+                                console.log(response);
+                                $('.bigcounter').html(response.totalcart);
+                                $('.cart-item-loop').html(response.html);
+                                $('.subtotal-price').html(response.subtotal);
+                            }
+                        });
+                    });
+    </script>
+@endpush

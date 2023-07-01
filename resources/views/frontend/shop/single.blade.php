@@ -87,7 +87,8 @@
                             </div>
                             <div class="pro-btn">
                                 <input type="hidden" class="product_id" name="product_id" value="{{ $product->id }}">
-                                <a href="wishlist.html" class="btn btn-style1"><span><i class="fa fa-heart"></i></span></a>
+                                <a href="javascript:void(0)" class="btn btn-style1 add-to-wish-btn"><span><i
+                                            class="fa fa-heart"></i></span></a>
                                 {{-- <a href="javascript:void(0)" class="btn btn-style1"><span><i class="fa fa-shopping-bag"></i>
                                         Add
                                         to cart</span></a> --}}
@@ -335,6 +336,51 @@
                     $('.subtotal-price').html(response.subtotal);
                 }
             });
+        };
+
+        // Wish list
+        $(document).ready(function() {
+            wishload();
+            $('.add-to-wish-btn').click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.product_id').val();
+                var quantity = $(this).closest('.product_data').find('.quantity').val();
+
+                $.ajax({
+                    url: "{{ route('front.wish.store') }}",
+                    method: "POST",
+                    data: {
+                        'quantity': quantity,
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        wishload();
+                        console.log(response);
+                        toast(response.message);
+                    },
+                });
+            });
+        });
+
+        function wishload() {
+            $.ajax({
+                url: '{{ route('front.wish.load') }}',
+                method: "GET",
+                success: function(response) {
+                    $('.wish-icon-wrap').html('');
+                    var parsed = jQuery.parseJSON(response)
+                    var value = parsed; //Single Data Viewing
+                    $('.wish-icon-wrap').append($(
+                        '<span class="wishlist-icon"><i class="icon-heart"></i></span> <span class="wishlist-counter">' +
+                        value['totalwish'] + '</span>'));
+
+                    console.log(response);
+                    // $('.wishlist-counter').html(response.totalwish);
+                    // $('.cart-item-loop').html(response.html);
+                    // $('.subtotal-price').html(response.subtotal);
+                }
+            })
         }
     </script>
 @endpush
