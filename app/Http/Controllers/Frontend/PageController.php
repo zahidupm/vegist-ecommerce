@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use Illuminate\Support\Facades\Request;
 
 class PageController extends Controller
 {
@@ -30,5 +31,15 @@ class PageController extends Controller
         $product = Product::where('slug', $slug)->first();
 
         return view('frontend.shop.single', compact('product'));
+    }
+
+    // Single Product
+    public function singleAjaxProduct(Request $request)
+    {
+        $product = Product::with('gallery')->where('slug', $request->slug)->first();
+
+        return [
+            'product' => $product,
+        ];
     }
 }

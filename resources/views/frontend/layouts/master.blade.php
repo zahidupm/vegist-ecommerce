@@ -332,7 +332,7 @@
                 <li class="subtotal-info">
                     <div class="subtotal-titles">
                         <h6>Sub total:</h6>
-                        <span class="subtotal-price">$750.00 USD</span>
+                        <span class="subtotal-price">$0.00 USD</span>
                     </div>
                 </li>
                 <li class="mini-cart-btns">
@@ -648,6 +648,86 @@
     <a href="javascript:void(0)" class="scroll" id="top">
         <span><i class="fa fa-angle-double-up"></i></span>
     </a>
+
+    <!-- quick veiw start -->
+    <section class="quick-view">
+        <div class="modal fade" id="product-quickview-modal" tabindex="-1"
+            aria-labelledby="product-quickview-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Product quickview
+                        </h5>
+                        <a href="javascript:void(0)" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="ion-close-round"></i></a>
+                    </div>
+                    <div class="quick-veiw-area">
+                        {{-- <div class="quick-image">
+                            <div class="tab-content">
+                                @foreach ($product->gallery as $key => $image)
+                                    <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}"
+                                        id="image-{{ $image->id }}">
+                                        <a href="javascript:void(0)" class="long-img">
+                                            <img src="{{ getAssetUrl($image->name, 'uploads/products') }}"
+                                                class="img-fluid" alt="{{ $image->name }}">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div> --}}
+
+                        <div class="" id="modal-main-images">
+                            {{-- <ul class="nav nav-tabs quick-slider owl-carousel owl-theme">
+                                @foreach ($product->gallery as $key => $image)
+                                    <li class="nav-item items">
+                                        <a class="nav-link " data-bs-toggle="tab"
+                                            href="#image-{{ $image->id }}"><img
+                                                src="{{ getAssetUrl($image->name, 'uploads/products') }}"
+                                                class="img-fluid" alt="{{ $image->name }}"></a>
+                                    </li>
+                                @endforeach
+                            </ul> --}}
+
+                            <ul class="" id="modal-mini-images">
+                            </ul>
+                        </div>
+                        <div class="quick-caption">
+                            <h4 id="modal-product-title"></h4>
+                            <div class="quick-price">
+                                <span class="new-price">$<span id="modal-product-price"></span> USD</span>
+                            </div>
+                            <div class="quick-rating">
+                                <i class="fa fa-star c-star"></i>
+                                <i class="fa fa-star c-star"></i>
+                                <i class="fa fa-star c-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <div class="pro-description">
+                                <p id="modal-product-excerpt"></p>
+                            </div>
+
+                            <div class="plus-minus">
+                                <span>
+                                    <a href="javascript:void(0)" class="minus-btn text-black">-</a>
+                                    <input type="text" name="name" value="1" class="quantity">
+                                    <a href="javascript:void(0)" class="plus-btn text-black">+</a>
+                                </span>
+                                <a href="wishlist.html" class="quick-wishlist"><i class="fa fa-heart"></i></a>
+                                <input type="hidden" name="name" value="" class="product_id">
+                                <a href="javascript:void(0)" class="quick-cart" id="add-to-cart-btn"><i
+                                        class="fa fa-shopping-bag"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- quick veiw end -->
+
+
+
     <!-- back to top end -->
     <div class="mm-fullscreen-bg"></div>
     <!-- jquery -->
@@ -699,6 +779,7 @@
             });
         });
 
+
         $(document).ready(function() {
             cartload();
             wishload();
@@ -718,6 +799,22 @@
                     $('.cart-item-loop').html(response.html);
                     $('.subtotal-price').html(response.subtotal);
                 }
+            });
+        }
+
+        // Add to cart
+        function addToCart(id, quantity) {
+            $.ajax({
+                url: '{{ route('front.cart.store') }}',
+                method: "POST",
+                data: {
+                    'quantity': quantity,
+                    'product_id': id,
+                },
+                success: function(response) {
+                    toast(response.message);
+                    cartload();
+                },
             });
         }
 
@@ -833,6 +930,89 @@
                 onClick: function() {} // Callback after click
             }).showToast();
         }
+
+
+        // modal
+
+        function formatMoney(number) {
+            return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function assetUrl(name, location = 'uploads') {
+            if (name.startsWith('http')) {
+                return name;
+            } else {
+                return '{{ URL::asset('location') }}' + '/' + name;
+            }
+        }
+
+        $('#product-quickview-modal').on('shown.bs.modal', function(e) {
+            var slug = $(e.relatedTarget).data('product');
+            $.ajax({
+                url: '{{ route('front.shop.ajax.single') }}',
+                method: "POST",
+                data: {
+                    'slug': slug,
+                },
+                success: function(response) {
+                    var gallery = product.gallery;
+                    var images = '';
+                    var bigImages = '';
+                    for (let index = 0; index < gallery.length; index++) {
+                        var name = gallery[index].name;
+                        var image = assetUrl(name);
+                        var active = '';
+                        if (index == 0) {
+                            active = 'show active';
+                        }
+                        images +=
+                            '<li class="nav-item items"><img src="' + image +
+                            '" class="img-fluid" alt="' +
+                            name + '"></li>';
+                        bigImages += '<img src="' + image +
+                            '"  class="img-fluid" alt="' + name + '">';
+                    }
+                    $('#modal-mini-images').html(images);
+                    $('#modal-main-images').html(bigImages);
+                    $('#modal-main-images').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        lazyLoad: 'ondemand',
+                        fade: true,
+                        asNavFor: '#modal-mini-images'
+                    });
+                    $('#modal-mini-images').slick({
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        lazyLoad: 'ondemand',
+                        autoplay: true,
+                        asNavFor: '#modal-main-images',
+                        dots: true,
+                        centerMode: true,
+                        centerPadding: '0px',
+                        focusOnSelect: true
+                    });
+                    var product = response.product;
+                    $('#modal-product-title').html(product.title)
+                    $('#modal-product-excerpt').html(product.excerpt)
+                    $('#modal-product-price').html(formatMoney(product.price))
+                    $('.plus-minus .product_id').val(product.id)
+                },
+            });
+        });
+        $('#product-quickview-modal').on('hidden.bs.modal', function(e) {
+            $('#modal-product-title').html('')
+            $('#modal-product-excerpt').html('')
+            $('#modal-product-price').html('')
+            $('.plus-minus .product_id').val('')
+        })
+        $(document).on('click', '.modal-content #add-to-cart-btn', function(e) {
+            e.preventDefault();
+            var quantity = $(this).closest('.quick-caption').find('.quantity').val();
+            var product_id = $(this).closest('.quick-caption').find('.product_id').val();
+            addToCart(product_id, quantity);
+        });
     </script>
 
     @stack('js')

@@ -230,7 +230,9 @@
                         @foreach ($product->category->products as $item)
                             @if ($product->id != $item->id)
                                 <div class="items">
-                                    <div class="tred-pro">
+
+                                    <x-frontend.product-item :product="$item" />
+                                    {{-- <div class="tred-pro">
                                         <div class="tr-pro-img">
                                             <a href="{{ route('front.shop.single', $item->slug) }}">
                                                 <img class="img-fluid"
@@ -264,7 +266,7 @@
                                         <div class="pro-price">
                                             <span class="new-price">${{ number_format($item->price, 2) }} USD</span>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             @endif
