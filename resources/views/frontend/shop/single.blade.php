@@ -75,6 +75,26 @@
                                     <a href="javascript:void(0)"><span></span></a>
                                 </span>
                             </div> --}}
+
+                            @php
+                                $options = $product->option ? json_decode($product->option, true) : '';
+                            @endphp
+                            @if ($options)
+
+                                @foreach ($options as $option)
+                                    <div class="pro-items">
+                                        <span class="pro-size">{{ $option[0] }}:</span>
+                                        <ul class="pro-wight">
+                                            @foreach ($option as $key => $item)
+                                                @if ($key != 0)
+                                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>
+                                                @endif
+                                            @endforeach
+
+                                        </ul>
+                                    </div>
+                                @endforeach
+                            @endif
                             <div class="pro-qty">
                                 <span class="qty">Quantity:</span>
                                 <div class="plus-minus">

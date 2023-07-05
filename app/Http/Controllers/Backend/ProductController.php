@@ -33,12 +33,15 @@ class ProductController extends Controller
                 'gallery' => 'required',
             ]);
 
+            $option = json_encode($request->option);
+
             $product = Product::create([
                 'title' => $request->title,
                 'slug' => $request->slug,
                 'excerpt' => $request->excerpt,
                 'description' => $request->description,
                 'category_id' => $request->category_id,
+                'option' => $option,
                 'price' => $request->price,
             ]);
 
@@ -82,6 +85,8 @@ class ProductController extends Controller
                 'gallery' => 'nullable',
             ]);
 
+            $option = json_encode($request->option);
+
             // Slider Update
             $product->update([
                 'title' => $request->title,
@@ -89,6 +94,7 @@ class ProductController extends Controller
                 'excerpt' => $request->excerpt,
                 'description' => $request->description,
                 'category_id' => $request->category_id,
+                'option' => $option,
                 'price' => $request->price,
             ]);
 
