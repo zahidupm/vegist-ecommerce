@@ -39,6 +39,12 @@
                                             </h4>
                                             <span class="cart-pro-price">${{ number_format($cart->item_price, 2) }}
                                                 USD</span>
+                                            @if ($cart->item_options)
+                                                <br>
+                                                @foreach ($cart->item_options as $name => $option)
+                                                    <p><span><b>{{ $name }}:</b> {{ $option }}</span></p>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="qty-item">

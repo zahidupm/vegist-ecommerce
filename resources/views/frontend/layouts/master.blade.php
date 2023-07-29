@@ -803,13 +803,14 @@
         }
 
         // Add to cart
-        function addToCart(id, quantity) {
+        function addToCart(id, quantity, options={}) {
             $.ajax({
                 url: '{{ route('front.cart.store') }}',
                 method: "POST",
                 data: {
                     'quantity': quantity,
                     'product_id': id,
+                    'options': options
                 },
                 success: function(response) {
                     toast(response.message);
@@ -921,8 +922,8 @@
                 // destination: "https://github.com/apvarun/toastify-js",
                 newWindow: true,
                 close: true,
-                gravity: "bottom", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
                 stopOnFocus: true, // Prevents dismissing of toast on hover
                 style: {
                     background: "linear-gradient(to right, #00b09b, #96c93d)",

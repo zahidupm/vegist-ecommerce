@@ -87,7 +87,11 @@
                                         <ul class="pro-wight">
                                             @foreach ($option as $key => $item)
                                                 @if ($key != 0)
-                                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>
+{{--                                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>--}}
+                                                    <li>
+                                                        <input type="radio" name="option_item['{{ $option[0] }}'][]" id="{{$item}}" value="{{ $item }}" required>
+                                                        <label for="{{ $item }}">{{ $item }}</label>
+                                                    </li>
                                                 @endif
                                             @endforeach
 
@@ -314,31 +318,58 @@
         }
 
 
-        // $(document).ready(function() {
-        //     cartload();
-        //     // Add To cart via cookie
-        //     $('.add-to-cart-btn').click(function(e) {
-        //         e.preventDefault();
+        {{--$(document).ready(function() {--}}
+        {{--    cartload();--}}
+        {{--    // Add To cart via cookie--}}
+        {{--    $('.add-to-cart-btn').click(function(e) {--}}
+        {{--        e.preventDefault();--}}
 
-        //         var product_id = $(this).closest('.product_data').find('.product_id').val();
-        //         var quantity = $(this).closest('.product_data').find('.quantity').val();
+        {{--        var product_id = $(this).closest('.product_data').find('.product_id').val();--}}
+        {{--        var quantity = $(this).closest('.product_data').find('.quantity').val();--}}
 
 
-        //         $.ajax({
-        //             url: '{{ route('front.cart.store') }}',
-        //             method: "POST",
-        //             data: {
-        //                 'quantity': quantity,
-        //                 'product_id': product_id,
-        //             },
-        //             success: function(response) {
-        //                 console.log(response);
-        //                 toast(response.message);
-        //                 cartload();
-        //             },
-        //         });
-        //     });
-        // });
+        {{--      $.ajax({--}}
+        {{--         url: '{{ route('front.cart.store') }}',--}}
+        {{--            method: "POST",--}}
+        {{--            data: {--}}
+        {{--                'quantity': quantity,--}}
+        {{--                'product_id': product_id,--}}
+        {{--            },--}}
+        {{--            success: function(response) {--}}
+        {{--                console.log(response);--}}
+        {{--                toast(response.message);--}}
+        {{--                cartload();--}}
+        {{--            },--}}
+        {{--        });--}}
+        {{--    });--}}
+        {{--})--}}
+
+
+        $(document).ready(function() {
+            cartload();
+            // Add To cart via cookie
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault();
+
+                var product_id = $(this).closest('.product_data').find('.product_id').val();
+                var quantity = $(this).closest('.product_data').find('.quantity').val();
+
+
+                var optionItemValues = {};
+
+                $('input[name^="option_item"]:checked').each(function(e) {
+                    var name = $(this).attr('name');
+                    var value = $(this).val();
+                    var matches = name.match(/option_item\['(.*)'\]\[\]/);
+                    var extractedName = matches[1];
+                    optionItemValues[extractedName] = value;
+                });
+
+                addToCart(product_id, quantity, optionItemValues);
+
+            });
+        })
+
 
         function cartload() {
             $.ajax({
